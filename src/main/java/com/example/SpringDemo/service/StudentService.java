@@ -45,7 +45,12 @@ public class StudentService {
     }
 
     public void deleteStudentById(Long id) {
-        repository.deleteById(id);
+        Optional<Student> optionalStudent = repository.findById(id);
+        if (optionalStudent.isPresent()) {
+            repository.deleteById(id);
+        } else {
+            throw new ResourceNotFound("Record Not Found");
+        }
     }
 
 }
